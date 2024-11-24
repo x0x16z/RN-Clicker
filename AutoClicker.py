@@ -64,7 +64,7 @@ Name = [
 
 
 class _0x16z:
-    class RClicker:
+    class AutoClicker:
         def __init__(self):
             self.MouseController = mouse.Controller()
             self.KeyboardController = keyboard.Controller()
