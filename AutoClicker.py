@@ -12,11 +12,9 @@ from win32api import GetSystemMetrics
 from random import randint as Randint
 from ctypes import windll as WinDLL
 from pywinstyles import apply_style
-from subprocess import check_output
 from win32con import SM_CYSCREEN
 from win32con import SM_CXSCREEN
 from win32api import mouse_event
-from pynput.keyboard import Key
 from tkinter import BooleanVar
 from pynput import keyboard
 from winsound import Beep
@@ -41,8 +39,9 @@ def NWS(a, type_='x'):
     return int(a * ZSX) if type_ == 'x' else int(a * ZSY)
 
 
+ThemeName: str = 'flatly'
 LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'Extra1', 'Extra2', 'Disabled']
-RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Telly', 'AACNoSlow', 'FastBow', 'Extra1', 'Extra2', 'Disabled']
+RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Extra1', 'Extra2', 'Disabled']
 VK = {
     "LMouseBtn": 0x01, "RMouseBtn": 0x02, "Backspace": 0x08, "Tab": 0x09, "Enter": 0x0D, "Shift": 0x10, "Control": 0x11,
     "Alt": 0x12, "Space": 0x20, "Insert": 0x2D, "Delete": 0x2E, "0": 0x30, "1": 0x31,
@@ -288,49 +287,11 @@ class _0x16z:
                     elif RightMode == 'DropNoSlow':
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                         mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
-                        sleep(0.1)
                         self.KeyboardController.press('q')
-                        sleep(0.02)
+                        sleep(0.17)
                         self.KeyboardController.release('q')
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                         sleep(1.73)
-                    elif RightMode == 'AACNoSlow':
-                        self.KeyboardController.press(Key.space)
-                        mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
-                        sleep(0.03)
-                        mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
-                        sleep(0.04)
-                        self.KeyboardController.release(Key.space)
-                    elif RightMode == 'Telly':
-                        self.KeyboardController.press('w')
-                        self.KeyboardController.press(Key.space)
-                        sleep(0.15)
-                        self.KeyboardController.release(Key.space)
-                        self.KeyboardController.release('w')
-                        self.MouseController.move(9999, 0)
-                        sleep(0.04)
-                        self.MouseController.move(9999, 0)
-                        for _ in range(25):
-                            mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
-                            sleep(0.01)
-                            mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
-                            self.MouseController.move(0, H_yaw / 50)
-                        self.MouseController.move(-9999, H_yaw)
-                        sleep(0.08)
-                        self.MouseController.move(-9999, -H_yaw / 2)
-                        sleep(0.24)
-                    elif RightMode == 'FastBow':
-                        mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
-                        mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
-                        sleep(0.5)
-                        mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
-                        sleep(0.02)
-                        self.MouseController.scroll(0, -5)
-                        mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
-                        mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
-                        sleep(0.02)
-                        self.MouseController.scroll(0, 5)
-                        sleep(0.01)
                     elif 'Extra' in RightMode:
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                         for _ in range(int(self.ExtraCPS.get() - 1)):
