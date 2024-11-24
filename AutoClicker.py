@@ -41,7 +41,6 @@ def NWS(a, type_='x'):
     return int(a * ZSX) if type_ == 'x' else int(a * ZSY)
 
 
-ThemeName: str = 'flatly'
 LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'Extra1', 'Extra2', 'Disabled']
 RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Telly', 'AACNoSlow', 'FastBow', 'Extra1', 'Extra2', 'Disabled']
 VK = {
