@@ -43,7 +43,7 @@ ThemeName: str = 'flatly'
 LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'Extra1', 'Extra2', 'Disabled']
 RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Extra1', 'Extra2', 'Disabled']
 VK = {
-    "LMouseBtn": 0x01, "RMouseBtn": 0x02, "Backspace": 0x08, "Tab": 0x09, "Enter": 0x0D, "Shift": 0x10, "Control": 0x11,
+    "LMouseBtn": 0x01, "RMouseBtn": 0x02, "MouseBtn4": 0x05, "MouseBtn5": 0x06, "Backspace": 0x08, "Tab": 0x09, "Enter": 0x0D, "Shift": 0x10, "Control": 0x11,
     "Alt": 0x12, "Space": 0x20, "Insert": 0x2D, "Delete": 0x2E, "0": 0x30, "1": 0x31,
     "2": 0x32, "3": 0x33, "4": 0x34, "5": 0x35, "6": 0x36, "7": 0x37, "8": 0x38, "9": 0x39, "A": 0x41, "B": 0x42,
     "C": 0x43, "D": 0x44, "E": 0x45, "F": 0x46, "G": 0x47, "H": 0x48, "I": 0x49, "J": 0x4A, "K": 0x4B, "L": 0x4C,
@@ -53,12 +53,7 @@ VK = {
     "F12": 0x7B
 }
 
-Name = [
-    "LMouseBtn", "RMouseBtn", "Backspace", "Tab", "Enter", "Shift", "Control", "Alt", "Space", "Insert", "Delete",
-    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Left Windows", "Right Windows", "F1", "F2", "F3",
-    "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"
-]
+Name = list(VK.keys())
 
 
 class _0x16z:
@@ -180,8 +175,8 @@ class _0x16z:
 
             self.ExtraCPS.set(16)
             self.ShiftDisable.set('None')
-            self.LeftKey.set('R')
-            self.RightKey.set('G')
+            self.LeftKey.set('MouseBtn5')
+            self.RightKey.set('MouseBtn4')
             self.RightMode.set('Standard')
             self.LeftMode.set('Standard')
             self.LeftMaxCPS.set(13.37)
