@@ -149,10 +149,6 @@ class _0x16z:
             self.AutoRod1 = Checkbutton(self.Window, text='AutoRod', variable=self.AutoRod)
             self.AutoRod1.place(x=NWS(250, 'x'), y=NWS(540, 'y'))
 
-            self.AutoWTAP = BooleanVar()
-            self.AutoWTAP1 = Checkbutton(self.Window, text='AutoWTAP', variable=self.AutoWTAP)
-            self.AutoWTAP1.place(x=NWS(250, 'x'), y=NWS(500, 'y'))
-
             self.Topmost = BooleanVar()
             self.Topmost1 = Checkbutton(self.Window, text='WindowTopmost', variable=self.Topmost,
                                         command=lambda: self.UpdateWindow())
@@ -160,7 +156,7 @@ class _0x16z:
 
             self.ShiftDisable1 = Label(self.Window, text='ShiftDisable', font=('Arial', 17))
             self.ShiftDisable1.place(x=NWS(10, 'x'), y=NWS(405, 'y'))
-            self.ShiftDisable = Combobox(self.Window, state='readonly', values=['Left', 'Right', 'Both', 'Reverse-Right', 'None'],
+            self.ShiftDisable = Combobox(self.Window, state='readonly', values=['Left', 'Right', 'Both', 'Right-ShiftOnly', 'None'],
                                          width=140, height=24,
                                          font=('Arial', 14), dropdown_font=('Arial', 14))
             self.ShiftDisable.place(x=NWS(200, 'x'), y=NWS(409, 'y'))
@@ -199,11 +195,6 @@ class _0x16z:
                     Beep(1000, 150)
             if self.EnableClick:
                 if (LeftMode != 'Disabled' and IsPressed(VK[self.LeftKey.get()])) and (1 if self.ShiftDisable.get() in ['Right', 'None'] else not IsPressed(VK['Shift'])):
-                    OnStop = 0
-                    if self.AutoWTAP.get() and IsPressed(VK['W']):
-                        self.KeyboardController.release('w')
-                        OnStop = 1
-                        sleep(0.024)
                     self.AutoRodCount += 1
                     mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
                     if LeftMode not in ['Extra1', 'Extra2']:
@@ -235,12 +226,7 @@ class _0x16z:
                                         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
                                 sleep(0.2 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())))
                     elif LeftMode == 'Stable':
-                        if self.LeftMaxCPS.get() > 1:
-                            for _ in range(int(self.LeftMaxCPS.get()) - 1):
-                                mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
-                                if not self.LeftKeepClick.get():
-                                    mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
-                        sleep(0.97)
+                        sleep(0.35 / (int(self.LeftMaxCPS.get()) * 1.5))
                     elif LeftMode == 'Liquid':
                         sleep(((Randint(1000, 9999) / 10000) * (
                                 1000 / self.LeftMinCPS.get() - 1000 / self.LeftMaxCPS.get() + 1) + 1000 / self.LeftMaxCPS.get()) / 1000)
@@ -262,9 +248,6 @@ class _0x16z:
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                         sleep(0.04)
                         self.MouseController.scroll(0, 5)
-                    if self.AutoWTAP.get() and OnStop:
-                        sleep(0.04)
-                        self.KeyboardController.press('w')
 
                 elif (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((1 if self.ShiftDisable.get() in ['Left', 'None'] else not IsPressed(VK['Shift'])) if self.ShiftDisable.get() != 'Reverse-Right' else IsPressed(VK['Shift'])):
                     mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
