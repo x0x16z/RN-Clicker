@@ -28,7 +28,7 @@ set_default_color_theme('blue')
 
 ZSX = GetSystemMetrics(SM_CXSCREEN) / 2560.0
 ZSY = GetSystemMetrics(SM_CYSCREEN) / 1600.0
-H_yaw = GetSystemMetrics(SM_CYSCREEN)
+screenWidth, screenHeight = GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)
 
 
 def IsPressed(keys):
@@ -39,11 +39,19 @@ def NWS(a, type_='x'):
     return int(a * ZSX) if type_ == 'x' else int(a * ZSY)
 
 
+def IsCurSorInCenTer(mouseConTroller, threshold=25):
+    cursor_x, cursor_y = mouseConTroller.position
+    center_x, center_y = screenWidth // 2, screenHeight // 2
+    return abs(cursor_x - center_x) <= threshold and abs(cursor_y - center_y) <= threshold
+
+
 ThemeName: str = 'flatly'
-LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'Extra1', 'Extra2', 'Disabled']
+LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'Extra1', 'Extra2',
+                     'Disabled']
 RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Extra1', 'Extra2', 'Disabled']
 VK = {
-    "LMouseBtn": 0x01, "RMouseBtn": 0x02, "MouseBtn4": 0x05, "MouseBtn5": 0x06, "Backspace": 0x08, "Tab": 0x09, "Enter": 0x0D, "Shift": 0x10, "Control": 0x11,
+    "LMouseBtn": 0x01, "RMouseBtn": 0x02, "MouseBtn4": 0x05, "MouseBtn5": 0x06, "Backspace": 0x08, "Tab": 0x09,
+    "Enter": 0x0D, "Shift": 0x10, "Control": 0x11,
     "Alt": 0x12, "Space": 0x20, "Insert": 0x2D, "Delete": 0x2E, "0": 0x30, "1": 0x31,
     "2": 0x32, "3": 0x33, "4": 0x34, "5": 0x35, "6": 0x36, "7": 0x37, "8": 0x38, "9": 0x39, "A": 0x41, "B": 0x42,
     "C": 0x43, "D": 0x44, "E": 0x45, "F": 0x46, "G": 0x47, "H": 0x48, "I": 0x49, "J": 0x4A, "K": 0x4B, "L": 0x4C,
@@ -139,24 +147,25 @@ class _0x16z:
             self.RightKey.place(x=NWS(200, 'x'), y=NWS(365, 'y'))
 
             self.LeftKeepClick1 = Checkbutton(self.Window, text='Left KeepClick',
-                                              variable=self.LeftKeepClick)
+                                              variable=self.LeftKeepClick, font=('Arial', 14))
             self.LeftKeepClick1.place(x=NWS(10, 'x'), y=NWS(465, 'y'))
             self.RightKeepClick1 = Checkbutton(self.Window, text='RightKeepClick',
-                                               variable=self.RightKeepClick)
+                                               variable=self.RightKeepClick, font=('Arial', 14))
             self.RightKeepClick1.place(x=NWS(10, 'x'), y=NWS(505, 'y'))
 
             self.AutoRod = BooleanVar()
-            self.AutoRod1 = Checkbutton(self.Window, text='AutoRod', variable=self.AutoRod)
+            self.AutoRod1 = Checkbutton(self.Window, text='AutoRod', variable=self.AutoRod, font=('Arial', 14))
             self.AutoRod1.place(x=NWS(250, 'x'), y=NWS(540, 'y'))
 
             self.Topmost = BooleanVar()
             self.Topmost1 = Checkbutton(self.Window, text='WindowTopmost', variable=self.Topmost,
-                                        command=lambda: self.UpdateWindow())
+                                        command=lambda: self.UpdateWindow(), font=('Arial', 14))
             self.Topmost1.place(x=NWS(10, 'x'), y=NWS(545, 'y'))
 
             self.ShiftDisable1 = Label(self.Window, text='ShiftDisable', font=('Arial', 17))
             self.ShiftDisable1.place(x=NWS(10, 'x'), y=NWS(405, 'y'))
-            self.ShiftDisable = Combobox(self.Window, state='readonly', values=['Left', 'Right', 'Both', 'Right-ShiftOnly', 'None'],
+            self.ShiftDisable = Combobox(self.Window, state='readonly',
+                                         values=['Left', 'Right', 'Both', 'Right-ShiftOnly', 'None'],
                                          width=140, height=24,
                                          font=('Arial', 14), dropdown_font=('Arial', 14))
             self.ShiftDisable.place(x=NWS(200, 'x'), y=NWS(409, 'y'))
@@ -164,10 +173,14 @@ class _0x16z:
             self.ExtraCPS1 = Label(self.Window, text='ExtraCPS', font=('Arial', 17))
             self.ExtraCPS1.place(x=NWS(10, 'x'), y=NWS(200, 'y'))
             self.ExtraCPS = Scale(self.Window, from_=2, to=520,
-                                    command=lambda event: self.UpdateWindow(), width=NWS(120, 'x'))
+                                  command=lambda event: self.UpdateWindow(), width=NWS(120, 'x'))
             self.ExtraCPS.place(x=NWS(200, 'x'), y=NWS(200, 'y'))
             self.ExtraCPS2 = Label(self.Window, text='1337', font=('Arial', 17), height=1)
             self.ExtraCPS2.place(x=NWS(323, 'x'), y=NWS(200, 'y'))
+
+            self.InvenToryCheck = BooleanVar()
+            self.InvenToryCheck1 = Checkbutton(self.Window, text='InvenToryCheckA', font=('Arial', 14), variable=self.InvenToryCheck)
+            self.InvenToryCheck1.place(x=NWS(230, 'x'), y=NWS(465, 'y'))
 
             self.ExtraCPS.set(16)
             self.ShiftDisable.set('None')
@@ -193,8 +206,9 @@ class _0x16z:
                 else:
                     self.EnableClick = True
                     Beep(1000, 150)
-            if self.EnableClick:
-                if (LeftMode != 'Disabled' and IsPressed(VK[self.LeftKey.get()])) and (1 if self.ShiftDisable.get() in ['Right', 'None'] else not IsPressed(VK['Shift'])):
+            if self.EnableClick and (1 if not self.InvenToryCheck.get() else IsCurSorInCenTer(self.MouseController, 30)):
+                if (LeftMode != 'Disabled' and IsPressed(VK[self.LeftKey.get()])) and (
+                        1 if self.ShiftDisable.get() in ['Right', 'None'] else not IsPressed(VK['Shift'])):
                     self.AutoRodCount += 1
                     mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
                     if LeftMode not in ['Extra1', 'Extra2']:
@@ -249,7 +263,9 @@ class _0x16z:
                         sleep(0.04)
                         self.MouseController.scroll(0, 5)
 
-                elif (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((1 if self.ShiftDisable.get() in ['Left', 'None'] else not IsPressed(VK['Shift'])) if self.ShiftDisable.get() != 'Reverse-Right' else IsPressed(VK['Shift'])):
+                elif (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((
+                        1 if self.ShiftDisable.get() in ['Left', 'None'] else not IsPressed(
+                            VK['Shift'])) if self.ShiftDisable.get() != 'Reverse-Right' else IsPressed(VK['Shift'])):
                     mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
                     if RightMode not in ['Extra1', 'Extra2']:
                         sleep(0.017)
