@@ -56,7 +56,6 @@ def IsCurSorInCenTer(mouseConTroller, threshold=25):  # skid
     return abs(cursor_x - center_x) <= threshold and abs(cursor_y - center_y) <= threshold
 
 
-ThemeName: str = 'flatly'
 LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'Random1', 'Random2',
                      'Random3', 'Random4', 'Random5', 'Random6', 'Gauss', 'BetaVariate', 'Extra1', 'Extra2',
                      'Disabled']  # wtf
