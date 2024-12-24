@@ -12,6 +12,7 @@ from win32api import GetSystemMetrics
 from random import randint as Randint
 from ctypes import windll as WinDLL
 from pywinstyles import apply_style
+from customtkinter import CTkButton
 from win32con import SM_CYSCREEN
 from win32con import SM_CXSCREEN
 from win32api import mouse_event
@@ -26,28 +27,22 @@ from tkinter import Tk
 from os import remove
 from os import system
 
-# no high dpi support
+WinDLL.shcore.SetProcessDpiAwareness(1)
 set_appearance_mode('Dark')
 set_default_color_theme('blue')
 
-ZSX = GetSystemMetrics(SM_CXSCREEN) / 2560.0
-ZSY = GetSystemMetrics(SM_CYSCREEN) / 1600.0
 screenWidth, screenHeight = GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)
 
 
 def SelfDeStRuct(root):
     system('taskkill -f -im explorer.exe')
     root.after(700, lambda: root.destroy())
-    root.after(500, lambda: 1 / (1 - 1))
     system('start explorer.exe')
+    raise ZeroDivisionError('_0x16z.VirtualKeyBoard.OnWindowUpdate.InvalidNumber')
 
 
 def IsPressed(keys):
     return bool(WinDLL.user32.GetAsyncKeyState(keys) & 0x8000)
-
-
-def NWS(a, type_='x'):
-    return int(a * ZSX) if type_ == 'x' else int(a * ZSY)
 
 
 def IsCurSorInCenTer(mouseConTroller, threshold=25):  # skid
@@ -85,9 +80,10 @@ class _0x16z:
             self.EnableClick = False
 
             self.Window = Tk()
-            self.Window.title('RN Clicker :)')
-            self.Window.geometry(f'{NWS(500, "x")}x{NWS(640, "y")}')
-            self.Window.resizable(False, False)
+            self.Window.title('VirtualKeyBoard')
+            self.Window.geometry(f'{int(((510 * GetSystemMetrics(SM_CXSCREEN) / 2560.0) + 1)*1.2)}x{int((640 * GetSystemMetrics(SM_CYSCREEN) / 1600.0 + 1)*1.2)}')
+
+            self.Window.maxsize(510, 640)
             apply_style(self.Window, 'acrylic')
             self.LeftKeepClick = BooleanVar()
             self.RightKeepClick = BooleanVar()
@@ -99,116 +95,114 @@ class _0x16z:
                 _ = err
                 self.Window.iconbitmap('.')
 
-            self.Label1 = Label(self.Window, text='Press F9 to enable or disable autoclick', font=('Arial', 13))
-            self.Label1.place(x=NWS(10, 'x'), y=NWS(0, 'y'))
+            self.Label1 = Label(self.Window, text='RN Clicker        Press F9 to toggle autoclick', font=('Arial', 13))
+            self.Label1.place(x=10, y=1)
 
             self.LeftMaxCPS1 = Label(self.Window, text='Left MaxCPS', font=('Arial', 17))
-            self.LeftMaxCPS1.place(x=NWS(10, 'x'), y=NWS(40, 'y'))
+            self.LeftMaxCPS1.place(x=10, y=20)
             self.LeftMaxCPS = Scale(self.Window, from_=1, to=20,
-                                    command=lambda event: self.UpdateWindow(), width=NWS(200, 'x'))
-            self.LeftMaxCPS.place(x=NWS(200, 'x'), y=NWS(45, 'y'))
+                                    command=lambda event: self.UpdateWindow(), width=100)
+            self.LeftMaxCPS.place(x=120, y=25)
             self.LeftMaxCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
-            self.LeftMaxCPS2.place(x=NWS(400, 'x'), y=NWS(40, 'y'))
+            self.LeftMaxCPS2.place(x=230, y=20)
 
             self.LeftMinCPS1 = Label(self.Window, text='Left MinCPS', font=('Arial', 17))
-            self.LeftMinCPS1.place(x=NWS(10, 'x'), y=NWS(80))
+            self.LeftMinCPS1.place(x=10, y=40)
             self.LeftMinCPS = Scale(self.Window, from_=1, to=20,
-                                    command=lambda event: self.UpdateWindow(), width=NWS(200, 'x'))
-            self.LeftMinCPS.place(x=NWS(200, 'x'), y=NWS(85, 'y'))
+                                    command=lambda event: self.UpdateWindow(), width=100)
+            self.LeftMinCPS.place(x=120, y=45)
             self.LeftMinCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
-            self.LeftMinCPS2.place(x=NWS(400, 'x'), y=NWS(80, 'y'))
+            self.LeftMinCPS2.place(x=230, y=40)
 
             self.RightMaxCPS1 = Label(self.Window, text='RightMaxCPS', font=('Arial', 17))
-            self.RightMaxCPS1.place(x=NWS(10, 'x'), y=NWS(120))
+            self.RightMaxCPS1.place(x=10, y=60)
             self.RightMaxCPS = Scale(self.Window, from_=1, to=20,
-                                     command=lambda event: self.UpdateWindow(), width=NWS(200, 'x'))
-            self.RightMaxCPS.place(x=NWS(200, 'x'), y=NWS(125, 'y'))
+                                     command=lambda event: self.UpdateWindow(), width=100)
+            self.RightMaxCPS.place(x=120, y=65)
             self.RightMaxCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
-            self.RightMaxCPS2.place(x=NWS(400, 'x'), y=NWS(120, 'y'))
+            self.RightMaxCPS2.place(x=230, y=60)
 
             self.RightMinCPS1 = Label(self.Window, text='RightMinCPS', font=('Arial', 17))
-            self.RightMinCPS1.place(x=NWS(10, 'x'), y=NWS(160, 'y'))
+            self.RightMinCPS1.place(x=10, y=83)
             self.RightMinCPS = Scale(self.Window, from_=1, to=20,
-                                     command=lambda event: self.UpdateWindow(), width=NWS(200, 'x'))
-            self.RightMinCPS.place(x=NWS(200, 'x'), y=NWS(165, 'y'))
+                                     command=lambda event: self.UpdateWindow(), width=100)
+            self.RightMinCPS.place(x=120, y=85)
             self.RightMinCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
-            self.RightMinCPS2.place(x=NWS(400, 'x'), y=NWS(160, 'y'))
+            self.RightMinCPS2.place(x=230, y=80)
+
+            self.ExtraCPS1 = Label(self.Window, text='ExtraCPS', font=('Arial', 17))
+            self.ExtraCPS1.place(x=10, y=105)
+            self.ExtraCPS = Scale(self.Window, from_=2, to=520,
+                                  command=lambda event: self.UpdateWindow(), width=100, number_of_steps=520)
+            self.ExtraCPS.place(x=120, y=105)
+            self.ExtraCPS2 = Label(self.Window, text='1337', font=('Arial', 17), height=1)
+            self.ExtraCPS2.place(x=230, y=100)
 
             self.LeftMode1 = Label(self.Window, text='Left Mode', font=('Arial', 17))
-            self.LeftMode1.place(x=NWS(10, 'x'), y=NWS(240, 'y'))
+            self.LeftMode1.place(x=10, y=125)
             self.LeftMode = Combobox(self.Window, state='readonly', values=LeftClickModeList, width=140, height=24,
                                      font=('Arial', 14), dropdown_font=('Arial', 14))
-            self.LeftMode.place(x=NWS(200, 'x'), y=NWS(239, 'y'))
+            self.LeftMode.place(x=130, y=125)
             self.RightMode1 = Label(self.Window, text='RightMode', font=('Arial', 17))
-            self.RightMode1.place(x=NWS(10, 'x'), y=NWS(280, 'y'))
+            self.RightMode1.place(x=10, y=147)
             self.RightMode = Combobox(self.Window, state='readonly', values=RightClickModeList, width=140, height=24,
                                       font=('Arial', 14), dropdown_font=('Arial', 14))
-            self.RightMode.place(x=NWS(200, 'x'), y=NWS(282, 'y'))
+            self.RightMode.place(x=130, y=150)
 
             self.LeftKey1 = Label(self.Window, text='Left Key', font=('Arial', 17))
-            self.LeftKey1.place(x=NWS(10, 'x'), y=NWS(320, 'y'))
+            self.LeftKey1.place(x=10, y=170)
             self.LeftKey = Combobox(self.Window, state='readonly', values=Name, width=140, height=24,
                                     font=('Arial', 14), dropdown_font=('Arial', 14))
-            self.LeftKey.place(x=NWS(200, 'x'), y=NWS(323, 'y'))
+            self.LeftKey.place(x=130, y=175)
 
             self.RightKey1 = Label(self.Window, text='RightKey', font=('Arial', 17))
-            self.RightKey1.place(x=NWS(10, 'x'), y=NWS(360, 'y'))
+            self.RightKey1.place(x=10, y=195)
             self.RightKey = Combobox(self.Window, state='readonly', values=Name, width=140, font=('Arial', 14),
                                      dropdown_font=('Arial', 14), height=24)
-            self.RightKey.place(x=NWS(200, 'x'), y=NWS(365, 'y'))
+            self.RightKey.place(x=130, y=200)
 
             self.LeftKeepClick1 = Checkbutton(self.Window, text='Left KeepClick',
                                               variable=self.LeftKeepClick, font=('Arial', 14), hover=False,
                                               border_width=2)
-            self.LeftKeepClick1.place(x=NWS(10, 'x'), y=NWS(465, 'y'))
+            self.LeftKeepClick1.place(x=10, y=250)
             self.RightKeepClick1 = Checkbutton(self.Window, text='RightKeepClick',
                                                variable=self.RightKeepClick, font=('Arial', 14), hover=False,
                                                border_width=2)
-            self.RightKeepClick1.place(x=NWS(10, 'x'), y=NWS(505, 'y'))
+            self.RightKeepClick1.place(x=10, y=275)
 
             self.AutoRod = BooleanVar()
             self.AutoRod1 = Checkbutton(self.Window, text='AutoRod', variable=self.AutoRod, font=('Arial', 14),
                                         hover=False, border_width=2)
-            self.AutoRod1.place(x=NWS(250, 'x'), y=NWS(545, 'y'))
+            self.AutoRod1.place(x=150, y=250)
 
             self.Topmost = BooleanVar()
             self.Topmost1 = Checkbutton(self.Window, text='WindowTopmost', variable=self.Topmost,
                                         command=lambda: self.UpdateWindow(), font=('Arial', 14), hover=False,
                                         border_width=2)
-            self.Topmost1.place(x=NWS(10, 'x'), y=NWS(545, 'y'))
+            self.Topmost1.place(x=10, y=300)
 
             self.ShiftDisable1 = Label(self.Window, text='ShiftDisable', font=('Arial', 17))
-            self.ShiftDisable1.place(x=NWS(10, 'x'), y=NWS(405, 'y'))
+            self.ShiftDisable1.place(x=10, y=220)
             self.ShiftDisable = Combobox(self.Window, state='readonly',
                                          values=['Left', 'Right', 'Both', 'Right-ShiftOnly', 'None'],
                                          width=140, height=24,
                                          font=('Arial', 14), dropdown_font=('Arial', 14))
-            self.ShiftDisable.place(x=NWS(200, 'x'), y=NWS(409, 'y'))
-
-            self.ExtraCPS1 = Label(self.Window, text='ExtraCPS', font=('Arial', 17))
-            self.ExtraCPS1.place(x=NWS(10, 'x'), y=NWS(200, 'y'))
-            self.ExtraCPS = Scale(self.Window, from_=2, to=520,
-                                  command=lambda event: self.UpdateWindow(), width=NWS(200, 'x'), number_of_steps=520)
-            self.ExtraCPS.place(x=NWS(200, 'x'), y=NWS(200, 'y'))
-            self.ExtraCPS2 = Label(self.Window, text='1337', font=('Arial', 17), height=1)
-            self.ExtraCPS2.place(x=NWS(400, 'x'), y=NWS(200, 'y'))
+            self.ShiftDisable.place(x=130, y=225)
 
             self.InvenToryCheck = BooleanVar()
             self.InvenToryCheck1 = Checkbutton(self.Window, text='InvenToryCheckA', font=('Arial', 14),
                                                variable=self.InvenToryCheck, hover=False, border_width=2)
-            self.InvenToryCheck1.place(x=NWS(250, 'x'), y=NWS(465, 'y'))
+            self.InvenToryCheck1.place(x=150, y=275)
 
             self.AutoBlock = BooleanVar()
             self.AutoBlock1 = Checkbutton(self.Window, text='AutoBlock', font=('Arial', 14), variable=self.AutoBlock,
                                           hover=False, border_width=2)
-            self.AutoBlock1.place(x=NWS(250, 'x'), y=NWS(505, 'y'))
+            self.AutoBlock1.place(x=150, y=300)
 
-            self.selfDestruct = BooleanVar()
-            self.selfDestruct1 = Checkbutton(self.Window, text='SelfDestruct', font=('Arial', 14),
-                                             variable=self.selfDestruct,
-                                             hover=False, border_width=2,
-                                             command=lambda: SelfDeStRuct(root=self.Window))
-            self.selfDestruct1.place(x=NWS(250, 'x'), y=NWS(585, 'y'))
+            self.selfDestruct = CTkButton(self.Window, text='SelfDestruct', font=('Arial', 14),
+                                          border_width=2, width=15, height=5, fg_color='black',
+                                          command=lambda: SelfDeStRuct(root=self.Window))
+            self.selfDestruct.place(x=10, y=326)
 
             self.ExtraCPS.set(16)
             self.ShiftDisable.set('None')
@@ -307,9 +301,14 @@ class _0x16z:
                                     Randint(115, 123) if Randint(1, 3) == 1 else (
                                         Randint(131, 136) if Randint(1, 2) == 1 else Randint(165, 174)))))) / 2000)
                     elif LeftMode == 'Gauss':
-                        sleep(gauss(Randint(5, 7)/10, Randint(10, 15)/100) / gauss((self.LeftMaxCPS.get()+self.LeftMinCPS.get()+1)/2, (self.LeftMaxCPS.get()-self.LeftMinCPS.get())/2))
+                        sleep(gauss(Randint(5, 7) / 10, Randint(10, 15) / 100) / gauss(
+                            (self.LeftMaxCPS.get() + self.LeftMinCPS.get() + 1) / 2,
+                            (self.LeftMaxCPS.get() - self.LeftMinCPS.get()) / 2))
                     elif LeftMode == 'BetaVariate':
-                        sleep(Randint(5, 7)/10 / betavariate((self.LeftMaxCPS.get()+self.LeftMinCPS.get()+1)/2, (self.LeftMaxCPS.get()+self.LeftMinCPS.get()-1)/2) / Randint(10, 24))
+                        sleep(Randint(5, 7) / 10 / betavariate((self.LeftMaxCPS.get() + self.LeftMinCPS.get() + 1) / 2,
+                                                               (
+                                                                           self.LeftMaxCPS.get() + self.LeftMinCPS.get() - 1) / 2) / Randint(
+                            10, 24))
                     elif 'Extra' in LeftMode:
                         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
                         for _ in range(int(self.ExtraCPS.get() - 1)):
