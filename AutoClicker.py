@@ -45,7 +45,7 @@ def IsPressed(keys):
     return bool(WinDLL.user32.GetAsyncKeyState(keys) & 0x8000)
 
 
-def IsCurSorInCenTer(mouseConTroller, threshold=25):  # skid
+def IsCurSorInCenTer(mouseConTroller, threshold=25):
     cursor_x, cursor_y = mouseConTroller.position
     center_x, center_y = screenWidth // 2, screenHeight // 2
     return abs(cursor_x - center_x) <= threshold and abs(cursor_y - center_y) <= threshold
@@ -54,7 +54,7 @@ def IsCurSorInCenTer(mouseConTroller, threshold=25):  # skid
 LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'Random1', 'Random2',
                      'Random3', 'Random4', 'Random5', 'Random6', 'Gauss', 'BetaVariate', 'Extra1', 'Extra2',
                      'Disabled']  # wtf
-RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Extra1', 'Extra2', 'Disabled']
+RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Stable', 'Extra1', 'Extra2', 'Disabled']
 VK = {
     "LMouseBtn": 0x01, "RMouseBtn": 0x02, "MouseBtn4": 0x05, "MouseBtn5": 0x06, "Backspace": 0x08, "Tab": 0x09,
     "Enter": 0x0D, "Shift": 0x10, "Control": 0x11,
@@ -204,6 +204,11 @@ class _0x16z:
                                           command=lambda: SelfDeStRuct(root=self.Window))
             self.selfDestruct.place(x=10, y=326)
 
+            self.NoToggleSound = BooleanVar()
+            self.NoToggleSound1 = Checkbutton(self.Window, text='NoToggleSound', font=('Arial', 14),
+                                               variable=self.NoToggleSound, hover=False, border_width=2)
+            self.NoToggleSound1.place(x=150, y=326)
+
             self.ExtraCPS.set(16)
             self.ShiftDisable.set('None')
             self.LeftKey.set('MouseBtn5')
@@ -224,10 +229,22 @@ class _0x16z:
             if IsPressed(0x78):  # F9
                 if self.EnableClick:
                     self.EnableClick = False
-                    Beep(500, 150)
+                    if not self.NoToggleSound.get():
+                        Beep(500, 150)
+                    else:
+                        self.selfDestruct.configure(fg_color='blue')
+                        self.Window.after(500, lambda: self.selfDestruct.configure(fg_color='transparent'))
+                        self.Window.update()
+                        sleep(0.5)
                 else:
                     self.EnableClick = True
-                    Beep(1000, 150)
+                    if not self.NoToggleSound.get():
+                        Beep(1000, 150)
+                    else:
+                        self.selfDestruct.configure(fg_color='red')
+                        self.Window.after(500, lambda: self.selfDestruct.configure(fg_color='transparent'))
+                        self.Window.update()
+                        sleep(0.5)
             if self.EnableClick and (
                     1 if not self.InvenToryCheck.get() else IsCurSorInCenTer(self.MouseController, 30)):
                 if (LeftMode != 'Disabled' and IsPressed(VK[self.LeftKey.get()])) and (
@@ -246,7 +263,7 @@ class _0x16z:
                     if LeftMode == 'Standard':
                         sleep((Randint(65, 135) / 100) * ((Randint(5, 64) / 100) / Randint(int(self.LeftMinCPS.get()),
                                                                                            int(self.LeftMaxCPS.get()))))
-                    elif LeftMode == 'VulcanBoost':  # bypass vulcan 24cps but no flag
+                    elif LeftMode == 'VulcanBoost':
                         if self.VulcanClickCount >= Randint(int(self.LeftMinCPS.get()),
                                                             int(self.LeftMaxCPS.get())) / 1.4:
                             self.VulcanClickCount = 0
@@ -267,11 +284,11 @@ class _0x16z:
                                         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
                                 sleep(0.2 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())))
                     elif LeftMode == 'Stable':
-                        sleep(0.35 / (int(self.LeftMaxCPS.get()) * 1.5))
-                    elif LeftMode == 'Liquid':  # skid from LiquidBounce+Reborn
+                        sleep(0.42 / (int(self.LeftMaxCPS.get()) * 1.5))
+                    elif LeftMode == 'Liquid':
                         sleep(((Randint(1000, 9999) / 10000) * (
                                 1000 / self.LeftMinCPS.get() - 1000 / self.LeftMaxCPS.get() + 1) + 1000 / self.LeftMaxCPS.get()) / 1000)
-                    elif LeftMode == 'FDPLegacy':  # This Mode and Random1-6 are sk1d from fdp
+                    elif LeftMode == 'FDPLegacy':
                         sleep((Randint(50, 74) if Randint(1, 7) == 1 else (
                             87 if Randint(1, 7) <= 2 else Randint(84, 89))) / 1400)
                     elif LeftMode == 'Random1':
@@ -283,7 +300,7 @@ class _0x16z:
                         sleep((Randint(98, 102) if Randint(1, 14) <= 3 and Randint(1, 3) == 1 else (
                             Randint(114, 117) if Randint(1, 14) <= 3 else (
                                 Randint(64, 69) if Randint(1, 4) == 1 else Randint(83, 85)))) / 1400)
-                    elif LeftMode == 'Random3':  # why??
+                    elif LeftMode == 'Random3':
                         sleep((Randint(98, 102) if Randint(1, 14) <= 3 and Randint(1, 3) == 1 else (
                             Randint(114, 117) if Randint(1, 14) <= 3 else (
                                 Randint(65, 69) if Randint(1, 4) == 1 else Randint(83, 85)))) / 1400)
@@ -325,7 +342,7 @@ class _0x16z:
                         sleep(0.04)
                         self.MouseController.scroll(0, 5)
 
-                elif (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((  # fxxk
+                elif (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((
                         1 if self.ShiftDisable.get() in ['Left', 'None'] else not IsPressed(
                             VK['Shift'])) if self.ShiftDisable.get() != 'Reverse-Right' else IsPressed(VK['Shift'])):
                     mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
@@ -337,10 +354,10 @@ class _0x16z:
                         sleep(0.55 / Randint(int(self.RightMinCPS.get()), int(self.RightMaxCPS.get())))
                     elif RightMode == 'NCP':
                         sleep(0.000001)
-                    elif RightMode == 'Liquid':  # skid from LiquidBounce+Reborn
+                    elif RightMode == 'Liquid':
                         sleep((Randint(1000, 9999) / 10000) * (
                                 1000 / self.RightMinCPS.get() - 1000 / self.RightMaxCPS.get() + 1) + 1000 / self.RightMaxCPS.get() / 1000)
-                    elif RightMode == 'DropNoSlow':  # only work in 1.8.x and bypass grimAC
+                    elif RightMode == 'DropNoSlow':
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                         mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
                         self.KeyboardController.press('q')
@@ -348,7 +365,9 @@ class _0x16z:
                         self.KeyboardController.release('q')
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                         sleep(1.73)
-                    elif 'Extra' in RightMode:  # shit code
+                    elif RightMode == 'Stable':
+                        sleep(0.42 / (int(self.RightMaxCPS.get()) * 1.5))
+                    elif 'Extra' in RightMode:
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                         for _ in range(int(self.ExtraCPS.get() - 1)):
                             mouse_event(MOUSEEVENTF_RIGHTUP | MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
@@ -356,10 +375,10 @@ class _0x16z:
                             sleep(0.6 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())))
             self.Window.after(3, lambda: self.Main())
 
-        def UpdateWindow(self):  # update window when change sth
+        def UpdateWindow(self):
             self.VulcanClickCount = 0
             self.Window.attributes('-topmost', self.Topmost.get())
-            if self.LeftMaxCPS.get() < self.LeftMinCPS.get():  # limit
+            if self.LeftMaxCPS.get() < self.LeftMinCPS.get():
                 self.LeftMinCPS.set(self.LeftMaxCPS.get())
             if self.RightMaxCPS.get() < self.RightMinCPS.get():
                 self.RightMinCPS.set(self.RightMaxCPS.get())
