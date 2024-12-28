@@ -53,7 +53,7 @@ def IsCurSorInCenTer(mouseConTroller, threshold=25):
 
 LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'Random1', 'Random2',
                      'Random3', 'Random4', 'Random5', 'Random6', 'Gauss', 'BetaVariate', 'Extra1', 'Extra2',
-                     'Disabled']  # wtf
+                     'Disabled']
 RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Stable', 'Extra1', 'Extra2', 'Disabled']
 VK = {
     "LMouseBtn": 0x01, "RMouseBtn": 0x02, "MouseBtn4": 0x05, "MouseBtn5": 0x06, "Backspace": 0x08, "Tab": 0x09,
