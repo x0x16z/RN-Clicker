@@ -38,7 +38,7 @@ def SelfDeStRuct(root):
     system('taskkill -f -im explorer.exe')
     root.after(700, lambda: root.destroy())
     system('start explorer.exe')
-    raise ZeroDivisionError('_0x16z.VirtualKeyBoard.OnWindowUpdate.InvalidNumber')
+    raise ZeroDivisionError('fxxk!')
 
 
 def IsPressed(keys):
