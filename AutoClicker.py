@@ -38,7 +38,7 @@ def SelfDeStRuct(root):
     system('taskkill -f -im explorer.exe')
     root.after(700, lambda: root.destroy())
     system('start explorer.exe')
-    raise ZeroDivisionError('fxxk!')
+    raise ZeroDivisionError(root.winfo_id())
 
 
 def IsPressed(keys):
@@ -51,9 +51,8 @@ def IsCurSorInCenTer(mouseConTroller, threshold=25):
     return abs(cursor_x - center_x) <= threshold and abs(cursor_y - center_y) <= threshold
 
 
-LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'Random1', 'Random2',
-                     'Random3', 'Random4', 'Random5', 'Random6', 'Gauss', 'BetaVariate', 'Extra1', 'Extra2',
-                     'Disabled']
+LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'LegitButter', 'FastButter', 'Gauss', 'BetaVariate', 'Extra1', 'Extra2',
+                     'Disabled']  # wtf
 RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Stable', 'Extra1', 'Extra2', 'Disabled']
 VK = {
     "LMouseBtn": 0x01, "RMouseBtn": 0x02, "MouseBtn4": 0x05, "MouseBtn5": 0x06, "Backspace": 0x08, "Tab": 0x09,
@@ -291,40 +290,22 @@ class _0x16z:
                     elif LeftMode == 'FDPLegacy':
                         sleep((Randint(50, 74) if Randint(1, 7) == 1 else (
                             87 if Randint(1, 7) <= 2 else Randint(84, 89))) / 1400)
-                    elif LeftMode == 'Random1':
-                        sleep(((Randint(98, 100) if Randint(1, 3) == 1 else (
-                            Randint(125, 138) if Randint(1, 2) == 1 else Randint(148, 153))) if Randint(1, 5) == 1 else
-                               (Randint(65, 69) if Randint(1, 4) != 1 else (
-                                   Randint(81, 87) if Randint(1, 5) == 1 else Randint(97, 101)))) / 1400)
-                    elif LeftMode == 'Random2':
-                        sleep((Randint(98, 102) if Randint(1, 14) <= 3 and Randint(1, 3) == 1 else (
-                            Randint(114, 117) if Randint(1, 14) <= 3 else (
-                                Randint(64, 69) if Randint(1, 4) == 1 else Randint(83, 85)))) / 1400)
-                    elif LeftMode == 'Random3':
-                        sleep((Randint(98, 102) if Randint(1, 14) <= 3 and Randint(1, 3) == 1 else (
-                            Randint(114, 117) if Randint(1, 14) <= 3 else (
-                                Randint(65, 69) if Randint(1, 4) == 1 else Randint(83, 85)))) / 1400)
-                    elif LeftMode == 'Random4':
-                        sleep((Randint(105, 110) if Randint(1, 5) == 1 else (
-                            Randint(76, 79) if Randint(1, 3) == 1 else (
-                                78 if Randint(1, 3) == 1 else 77))) / 1400)
-                    elif LeftMode == 'Random5':
+                    elif LeftMode == 'LegitButter':
                         sleep((Randint(80, 104) if Randint(1, 7) == 1 else (
-                            117 if Randint(1, 7) <= 2 else Randint(114, 119))) / 1400)
-                    elif LeftMode == 'Random6':
+                            117 if Randint(1, 7) <= 2 else Randint(114, 119))) / 2300)
+                    elif LeftMode == 'FastButter':
                         sleep((Randint(225, 250) if Randint(1, 10) == 1 else (
                             Randint(89, 94) if Randint(1, 6) == 1 else (
                                 Randint(95, 103) if Randint(1, 3) == 1 else (
                                     Randint(115, 123) if Randint(1, 3) == 1 else (
-                                        Randint(131, 136) if Randint(1, 2) == 1 else Randint(165, 174)))))) / 2000)
+                                        Randint(131, 136) if Randint(1, 2) == 1 else Randint(165, 174)))))) / 10000)
                     elif LeftMode == 'Gauss':
-                        sleep(gauss(Randint(5, 7) / 10, Randint(10, 15) / 100) / gauss(
+                        sleep(0.5 / gauss(
                             (self.LeftMaxCPS.get() + self.LeftMinCPS.get() + 1) / 2,
-                            (self.LeftMaxCPS.get() - self.LeftMinCPS.get()) / 2))
+                            Randint(int((self.LeftMaxCPS.get() - self.LeftMinCPS.get()) / 2), int((self.LeftMaxCPS.get() + self.LeftMinCPS.get()) / 2))))
                     elif LeftMode == 'BetaVariate':
-                        sleep(Randint(5, 7) / 10 / betavariate((self.LeftMaxCPS.get() + self.LeftMinCPS.get() + 1) / 2,
-                                                               (
-                                                                           self.LeftMaxCPS.get() + self.LeftMinCPS.get() - 1) / 2) / Randint(
+                        sleep(0.5 / betavariate((self.LeftMaxCPS.get() + self.LeftMinCPS.get() + 1) / 2,
+                                                               (self.LeftMaxCPS.get() + self.LeftMinCPS.get() - 1) / 2) / Randint(
                             10, 24))
                     elif 'Extra' in LeftMode:
                         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
