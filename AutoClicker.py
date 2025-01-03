@@ -16,16 +16,16 @@ from customtkinter import CTkButton
 from win32con import SM_CYSCREEN
 from win32con import SM_CXSCREEN
 from win32api import mouse_event
-from random import betavariate
+from math import inf as INFINITY
 from tkinter import BooleanVar
 from pynput import keyboard
 from winsound import Beep
-from random import gauss
 from pynput import mouse
 from time import sleep
 from tkinter import Tk
 from os import remove
 from os import system
+from math import sqrt
 
 WinDLL.shcore.SetProcessDpiAwareness(1)
 set_appearance_mode('Dark')
@@ -38,7 +38,7 @@ def SelfDeStRuct(root):
     system('taskkill -f -im explorer.exe')
     root.after(700, lambda: root.destroy())
     system('start explorer.exe')
-    raise ZeroDivisionError(root.winfo_id())
+    return {sqrt(-INFINITY) / (1 / +INFINITY), (INFINITY * INFINITY) * (1 * -INFINITY)}
 
 
 def IsPressed(keys):
@@ -51,9 +51,10 @@ def IsCurSorInCenTer(mouseConTroller, threshold=25):
     return abs(cursor_x - center_x) <= threshold and abs(cursor_y - center_y) <= threshold
 
 
-LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'NoDelay', 'FDPLegacy', 'LegitButter', 'FastButter', 'Gauss', 'BetaVariate', 'Extra1', 'Extra2',
-                     'Disabled']  # wtf
-RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Stable', 'Extra1', 'Extra2', 'Disabled']
+LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'Fast', 'FDP5', 'Butterfly', 'NoDelay', 'Normal',
+                     'Experimental',  'Intave14', 'Extra1', 'Extra2', 'Disabled']
+RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Stable', 'Fast', 'Normal', 'Extra1',
+                      'Extra2', 'Disabled']
 VK = {
     "LMouseBtn": 0x01, "RMouseBtn": 0x02, "MouseBtn4": 0x05, "MouseBtn5": 0x06, "Backspace": 0x08, "Tab": 0x09,
     "Enter": 0x0D, "Shift": 0x10, "Control": 0x11,
@@ -75,18 +76,20 @@ class _0x16z:
             self.MouseController = mouse.Controller()
             self.KeyboardController = keyboard.Controller()
             self.VulcanClickCount = 0
+            self.Intave14ClickCount = 0
             self.AutoRodCount = 0
             self.EnableClick = False
 
             self.Window = Tk()
             self.Window.title('VirtualKeyBoard')
-            self.Window.geometry(f'{int(((510 * GetSystemMetrics(SM_CXSCREEN) / 2560.0) + 1)*1.2)}x{int((640 * GetSystemMetrics(SM_CYSCREEN) / 1600.0 + 1)*1.2)}')
+            self.Window.geometry(
+                f'{int(((510 * GetSystemMetrics(SM_CXSCREEN) / 2560.0) + 1) * 1.2)}x{int((700 * GetSystemMetrics(SM_CYSCREEN) / 1600.0 + 1) * 1.2)}')
 
-            self.Window.maxsize(510, 640)
+            self.Window.maxsize(510, 700)
             apply_style(self.Window, 'acrylic')
             self.LeftKeepClick = BooleanVar()
             self.RightKeepClick = BooleanVar()
-            try:  # why
+            try:
                 open('EXE.EXE', 'w').write('icon')
                 self.Window.iconbitmap('EXE.EXE')
                 remove('.\\EXE.EXE')
@@ -189,7 +192,7 @@ class _0x16z:
             self.ShiftDisable.place(x=130, y=225)
 
             self.InvenToryCheck = BooleanVar()
-            self.InvenToryCheck1 = Checkbutton(self.Window, text='InvenToryCheckA', font=('Arial', 14),
+            self.InvenToryCheck1 = Checkbutton(self.Window, text='InvenToryCheck', font=('Arial', 14),
                                                variable=self.InvenToryCheck, hover=False, border_width=2)
             self.InvenToryCheck1.place(x=150, y=275)
 
@@ -201,12 +204,22 @@ class _0x16z:
             self.selfDestruct = CTkButton(self.Window, text='SelfDestruct', font=('Arial', 14),
                                           border_width=2, width=15, height=5, fg_color='black',
                                           command=lambda: SelfDeStRuct(root=self.Window))
-            self.selfDestruct.place(x=10, y=326)
+            self.selfDestruct.place(x=10, y=376)
 
             self.NoToggleSound = BooleanVar()
             self.NoToggleSound1 = Checkbutton(self.Window, text='NoToggleSound', font=('Arial', 14),
-                                               variable=self.NoToggleSound, hover=False, border_width=2)
+                                              variable=self.NoToggleSound, hover=False, border_width=2)
             self.NoToggleSound1.place(x=150, y=326)
+
+            self.DoubleClick = BooleanVar()
+            self.DoubleClick1 = Checkbutton(self.Window, text='FakeDoubleClick', font=('Arial', 14),
+                                            variable=self.DoubleClick, hover=False, border_width=2)
+            self.DoubleClick1.place(x=10, y=326)
+
+            self.NCPSpeedLimiter = BooleanVar()
+            self.NCPSpeedLimiter1 = Checkbutton(self.Window, text='NCPSpeedLimiter', font=('Arial', 14),
+                                                variable=self.NCPSpeedLimiter, hover=False, border_width=2)
+            self.NCPSpeedLimiter1.place(x=150, y=351)
 
             self.ExtraCPS.set(16)
             self.ShiftDisable.set('None')
@@ -228,21 +241,21 @@ class _0x16z:
             if IsPressed(0x78):  # F9
                 if self.EnableClick:
                     self.EnableClick = False
+                    self.selfDestruct.configure(fg_color='blue')
+                    self.Window.after(500, lambda: self.selfDestruct.configure(fg_color='transparent'))
+                    self.Window.update()
                     if not self.NoToggleSound.get():
                         Beep(500, 150)
                     else:
-                        self.selfDestruct.configure(fg_color='blue')
-                        self.Window.after(500, lambda: self.selfDestruct.configure(fg_color='transparent'))
-                        self.Window.update()
                         sleep(0.5)
                 else:
                     self.EnableClick = True
+                    self.selfDestruct.configure(fg_color='red')
+                    self.Window.after(500, lambda: self.selfDestruct.configure(fg_color='transparent'))
+                    self.Window.update()
                     if not self.NoToggleSound.get():
                         Beep(1000, 150)
                     else:
-                        self.selfDestruct.configure(fg_color='red')
-                        self.Window.after(500, lambda: self.selfDestruct.configure(fg_color='transparent'))
-                        self.Window.update()
                         sleep(0.5)
             if self.EnableClick and (
                     1 if not self.InvenToryCheck.get() else IsCurSorInCenTer(self.MouseController, 30)):
@@ -252,7 +265,9 @@ class _0x16z:
                     if self.AutoBlock.get():
                         mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
                     mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
-                    if LeftMode not in ['Extra1', 'Extra2']:
+                    if self.DoubleClick.get() and Randint(1, 100) <= 55:
+                        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+                    if LeftMode not in ['Extra1', 'Extra2', 'NoDelay']:
                         sleep(0.017)
                     if not self.LeftKeepClick.get():
                         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
@@ -260,8 +275,12 @@ class _0x16z:
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                     self.VulcanClickCount += 1
                     if LeftMode == 'Standard':
-                        sleep((Randint(65, 135) / 100) * ((Randint(5, 64) / 100) / Randint(int(self.LeftMinCPS.get()),
-                                                                                           int(self.LeftMaxCPS.get()))))
+                        StandardClickDelay = (Randint(65, 135) / 100) * (
+                                    (Randint(5, 64) / 100) / Randint(int(self.LeftMinCPS.get()),
+                                                                     int(self.LeftMaxCPS.get())))
+                        sleep(StandardClickDelay if (
+                                    not self.NCPSpeedLimiter.get() or StandardClickDelay >= (0.7 / 14.75)) else (
+                                    0.7 / 16.69))
                     elif LeftMode == 'VulcanBoost':
                         if self.VulcanClickCount >= Randint(int(self.LeftMinCPS.get()),
                                                             int(self.LeftMaxCPS.get())) / 1.4:
@@ -287,26 +306,42 @@ class _0x16z:
                     elif LeftMode == 'Liquid':
                         sleep(((Randint(1000, 9999) / 10000) * (
                                 1000 / self.LeftMinCPS.get() - 1000 / self.LeftMaxCPS.get() + 1) + 1000 / self.LeftMaxCPS.get()) / 1000)
-                    elif LeftMode == 'FDPLegacy':
+                    elif LeftMode == 'FDP5':
                         sleep((Randint(50, 74) if Randint(1, 7) == 1 else (
                             87 if Randint(1, 7) <= 2 else Randint(84, 89))) / 1400)
-                    elif LeftMode == 'LegitButter':
-                        sleep((Randint(80, 104) if Randint(1, 7) == 1 else (
-                            117 if Randint(1, 7) <= 2 else Randint(114, 119))) / 2300)
-                    elif LeftMode == 'FastButter':
+                    elif LeftMode == 'Butterfly':
                         sleep((Randint(225, 250) if Randint(1, 10) == 1 else (
                             Randint(89, 94) if Randint(1, 6) == 1 else (
                                 Randint(95, 103) if Randint(1, 3) == 1 else (
                                     Randint(115, 123) if Randint(1, 3) == 1 else (
                                         Randint(131, 136) if Randint(1, 2) == 1 else Randint(165, 174)))))) / 10000)
-                    elif LeftMode == 'Gauss':
-                        sleep(0.5 / gauss(
-                            (self.LeftMaxCPS.get() + self.LeftMinCPS.get() + 1) / 2,
-                            Randint(int((self.LeftMaxCPS.get() - self.LeftMinCPS.get()) / 2), int((self.LeftMaxCPS.get() + self.LeftMinCPS.get()) / 2))))
-                    elif LeftMode == 'BetaVariate':
-                        sleep(0.5 / betavariate((self.LeftMaxCPS.get() + self.LeftMinCPS.get() + 1) / 2,
-                                                               (self.LeftMaxCPS.get() + self.LeftMinCPS.get() - 1) / 2) / Randint(
-                            10, 24))
+                    elif LeftMode == 'Experimental':
+                        self.MouseController.scroll(0, -5)
+                        sleep(0.5 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())))
+                        self.MouseController.scroll(0, 5)
+                    elif LeftMode == 'Intave14':
+                        self.Intave14ClickCount += 1
+                        if self.Intave14ClickCount <= 2:
+                            sleep(0.5 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())))
+                        elif self.Intave14ClickCount <= Randint(3, 6):
+                            sleep(0.5 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())) * 1.07)
+                        elif self.Intave14ClickCount <= Randint(7, 9):
+                            sleep(0.5 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())) / 3)
+                        elif self.Intave14ClickCount <= Randint(11, 13):
+                            sleep((Randint(50, 74) if Randint(1, 7) == 1 else (
+                                87 if Randint(1, 7) <= 2 else Randint(84, 89))) / 1600)
+                        elif self.Intave14ClickCount <= Randint(14, 15):
+                            sleep((Randint(80, 104) if Randint(1, 7) == 1 else (
+                                117 if Randint(1, 7) <= 2 else Randint(114, 119))) / 2300)
+                        elif self.Intave14ClickCount <= Randint(17, 18):
+                            sleep(0.42 / (int(self.LeftMaxCPS.get()) * 1.5))
+                        elif self.Intave14ClickCount <= Randint(19, 21):
+                            sleep(((Randint(1000, 9999) / 10000) * (
+                                    1000 / self.LeftMinCPS.get() - 1000 / self.LeftMaxCPS.get() + self.Intave14ClickCount) + 1000 / self.LeftMaxCPS.get()) / 1000)
+                        else:
+                            self.Intave14ClickCount = 0
+                    elif LeftMode == 'Normal':
+                        sleep(0.6 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())))
                     elif 'Extra' in LeftMode:
                         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
                         for _ in range(int(self.ExtraCPS.get() - 1)):
@@ -324,10 +359,10 @@ class _0x16z:
                         self.MouseController.scroll(0, 5)
 
                 elif (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((
-                        1 if self.ShiftDisable.get() in ['Left', 'None'] else not IsPressed(
-                            VK['Shift'])) if self.ShiftDisable.get() != 'Reverse-Right' else IsPressed(VK['Shift'])):
+                        1 if self.ShiftDisable.get() in ['Left', 'None'] else (not IsPressed(
+                            VK['Shift'])) if self.ShiftDisable.get() == 'Reverse-Right' else IsPressed(VK['Shift']))):
                     mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
-                    if RightMode not in ['Extra1', 'Extra2']:
+                    if RightMode not in ['Extra1', 'Extra2', 'NoDelay']:
                         sleep(0.017)
                     if not self.RightKeepClick.get():
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
@@ -348,6 +383,8 @@ class _0x16z:
                         sleep(1.73)
                     elif RightMode == 'Stable':
                         sleep(0.42 / (int(self.RightMaxCPS.get()) * 1.5))
+                    elif LeftMode == 'Normal':
+                        sleep(0.6 / Randint(int(self.RightMinCPS.get()), int(self.RightMaxCPS.get())))
                     elif 'Extra' in RightMode:
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                         for _ in range(int(self.ExtraCPS.get() - 1)):
