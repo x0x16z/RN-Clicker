@@ -8,6 +8,7 @@ from win32con import MOUSEEVENTF_RIGHTDOWN
 from win32con import MOUSEEVENTF_LEFTDOWN
 from win32con import MOUSEEVENTF_RIGHTUP
 from win32con import MOUSEEVENTF_LEFTUP
+from win32con import MOUSEEVENTF_MOVE
 from win32api import GetSystemMetrics
 from random import randint as Randint
 from ctypes import windll as WinDLL
@@ -16,7 +17,6 @@ from customtkinter import CTkButton
 from win32con import SM_CYSCREEN
 from win32con import SM_CXSCREEN
 from win32api import mouse_event
-from math import inf as INFINITY
 from tkinter import BooleanVar
 from pynput import keyboard
 from winsound import Beep
@@ -27,6 +27,8 @@ from os import remove
 from os import system
 from math import sqrt
 
+INFINITY = 1E1337
+NEGATIVE_INFINITY = -1E1337
 WinDLL.shcore.SetProcessDpiAwareness(1)
 set_appearance_mode('Dark')
 set_default_color_theme('blue')
@@ -38,7 +40,7 @@ def SelfDeStRuct(root):
     system('taskkill -f -im explorer.exe')
     root.after(700, lambda: root.destroy())
     system('start explorer.exe')
-    return {sqrt(-INFINITY) / (1 / +INFINITY), (INFINITY * INFINITY) * (1 * -INFINITY)}
+    return {sqrt(NEGATIVE_INFINITY) / (1 / INFINITY), (INFINITY * INFINITY) * (1 * NEGATIVE_INFINITY)}
 
 
 def IsPressed(keys):
@@ -51,9 +53,22 @@ def IsCurSorInCenTer(mouseConTroller, threshold=25):
     return abs(cursor_x - center_x) <= threshold and abs(cursor_y - center_y) <= threshold
 
 
-LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'Fast', 'FDP5', 'Butterfly', 'NoDelay', 'Normal',
-                     'Experimental',  'Intave14', 'Extra1', 'Extra2', 'Disabled']
-RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Stable', 'Fast', 'Normal', 'Extra1',
+def SmoothMouseMove(x, y):
+    XMoveDistance = 0.0
+    while XMoveDistance <= abs(x):
+        mouse_event(MOUSEEVENTF_MOVE, (1 if abs(x) == x else -1) * int((abs(x) - XMoveDistance) / 2 + 1), 0)
+        XMoveDistance += 1
+
+    YMoveDistance = 0.0
+    while YMoveDistance <= abs(y):
+        mouse_event(MOUSEEVENTF_MOVE, 0, (1 if abs(y) == y else -1) * int((abs(y) - YMoveDistance) / 2 + 1))
+        YMoveDistance += 1
+
+
+LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'LegitFast', 'FDP5', 'Butterfly', 'NoDelay',
+                     'Normal',
+                     'Experimental', 'Intave14', 'Extra1', 'Extra2', 'Disabled']
+RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Stable', 'LegitFast', 'Normal', 'Extra1',
                       'Extra2', 'Disabled']
 VK = {
     "LMouseBtn": 0x01, "RMouseBtn": 0x02, "MouseBtn4": 0x05, "MouseBtn5": 0x06, "Backspace": 0x08, "Tab": 0x09,
@@ -216,10 +231,15 @@ class _0x16z:
                                             variable=self.DoubleClick, hover=False, border_width=2)
             self.DoubleClick1.place(x=10, y=326)
 
-            self.NCPSpeedLimiter = BooleanVar()
-            self.NCPSpeedLimiter1 = Checkbutton(self.Window, text='NCPSpeedLimiter', font=('Arial', 14),
-                                                variable=self.NCPSpeedLimiter, hover=False, border_width=2)
-            self.NCPSpeedLimiter1.place(x=150, y=351)
+            self.NCPSpeedLimit = BooleanVar()
+            self.NCPSpeedLimit1 = Checkbutton(self.Window, text='NCPSpeedLimit', font=('Arial', 14),
+                                              variable=self.NCPSpeedLimit, hover=False, border_width=2)
+            self.NCPSpeedLimit1.place(x=150, y=351)
+
+            self.Jitter = BooleanVar()
+            self.Jitter1 = Checkbutton(self.Window, text='JitterClick', font=('Arial', 14), variable=self.Jitter,
+                                       hover=False, border_width=2)
+            self.Jitter1.place(x=10, y=351)
 
             self.ExtraCPS.set(16)
             self.ShiftDisable.set('None')
@@ -260,7 +280,10 @@ class _0x16z:
             if self.EnableClick and (
                     1 if not self.InvenToryCheck.get() else IsCurSorInCenTer(self.MouseController, 30)):
                 if (LeftMode != 'Disabled' and IsPressed(VK[self.LeftKey.get()])) and (
-                        1 if self.ShiftDisable.get() in ['Right', 'None'] else not IsPressed(VK['Shift'])):
+                        1 if self.ShiftDisable.get() in ['Right', 'None'] else
+                        not IsPressed(VK['Shift'])):
+                    if self.Jitter.get():
+                        SmoothMouseMove(Randint(-2, 3), Randint(-3, 2))
                     self.AutoRodCount += 1
                     if self.AutoBlock.get():
                         mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
@@ -276,11 +299,11 @@ class _0x16z:
                     self.VulcanClickCount += 1
                     if LeftMode == 'Standard':
                         StandardClickDelay = (Randint(65, 135) / 100) * (
-                                    (Randint(5, 64) / 100) / Randint(int(self.LeftMinCPS.get()),
-                                                                     int(self.LeftMaxCPS.get())))
+                            (Randint(5, 64) / 100) / Randint(int(self.LeftMinCPS.get()),
+                                                             int(self.LeftMaxCPS.get())))
                         sleep(StandardClickDelay if (
-                                    not self.NCPSpeedLimiter.get() or StandardClickDelay >= (0.7 / 14.75)) else (
-                                    0.7 / 16.69))
+                            not self.NCPSpeedLimit.get() or StandardClickDelay >= (0.7 / 14.75)) else (
+                            0.7 / 16.69))
                     elif LeftMode == 'VulcanBoost':
                         if self.VulcanClickCount >= Randint(int(self.LeftMinCPS.get()),
                                                             int(self.LeftMaxCPS.get())) / 1.4:
@@ -305,7 +328,7 @@ class _0x16z:
                         sleep(0.42 / (int(self.LeftMaxCPS.get()) * 1.5))
                     elif LeftMode == 'Liquid':
                         sleep(((Randint(1000, 9999) / 10000) * (
-                                1000 / self.LeftMinCPS.get() - 1000 / self.LeftMaxCPS.get() + 1) + 1000 / self.LeftMaxCPS.get()) / 1000)
+                            1000 / self.LeftMinCPS.get() - 1000 / self.LeftMaxCPS.get() + 1) + 1000 / self.LeftMaxCPS.get()) / 1000)
                     elif LeftMode == 'FDP5':
                         sleep((Randint(50, 74) if Randint(1, 7) == 1 else (
                             87 if Randint(1, 7) <= 2 else Randint(84, 89))) / 1400)
@@ -337,7 +360,7 @@ class _0x16z:
                             sleep(0.42 / (int(self.LeftMaxCPS.get()) * 1.5))
                         elif self.Intave14ClickCount <= Randint(19, 21):
                             sleep(((Randint(1000, 9999) / 10000) * (
-                                    1000 / self.LeftMinCPS.get() - 1000 / self.LeftMaxCPS.get() + self.Intave14ClickCount) + 1000 / self.LeftMaxCPS.get()) / 1000)
+                                1000 / self.LeftMinCPS.get() - 1000 / self.LeftMaxCPS.get() + self.Intave14ClickCount) + 1000 / self.LeftMaxCPS.get()) / 1000)
                         else:
                             self.Intave14ClickCount = 0
                     elif LeftMode == 'Normal':
@@ -358,9 +381,9 @@ class _0x16z:
                         sleep(0.04)
                         self.MouseController.scroll(0, 5)
 
-                elif (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((
-                        1 if self.ShiftDisable.get() in ['Left', 'None'] else (not IsPressed(
-                            VK['Shift'])) if self.ShiftDisable.get() == 'Reverse-Right' else IsPressed(VK['Shift']))):
+                if (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((
+                    1 if self.ShiftDisable.get() in ['Left', 'None'] else (not IsPressed(
+                        VK['Shift'])) if self.ShiftDisable.get() == 'Reverse-Right' else IsPressed(VK['Shift']))):
                     mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
                     if RightMode not in ['Extra1', 'Extra2', 'NoDelay']:
                         sleep(0.017)
@@ -372,7 +395,7 @@ class _0x16z:
                         sleep(0.000001)
                     elif RightMode == 'Liquid':
                         sleep((Randint(1000, 9999) / 10000) * (
-                                1000 / self.RightMinCPS.get() - 1000 / self.RightMaxCPS.get() + 1) + 1000 / self.RightMaxCPS.get() / 1000)
+                            1000 / self.RightMinCPS.get() - 1000 / self.RightMaxCPS.get() + 1) + 1000 / self.RightMaxCPS.get() / 1000)
                     elif RightMode == 'DropNoSlow':
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                         mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
