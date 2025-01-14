@@ -383,7 +383,7 @@ class _0x16z:
 
                 if (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((
                     1 if self.ShiftDisable.get() in ['Left', 'None'] else (not IsPressed(
-                        VK['Shift'])) if self.ShiftDisable.get() == 'Reverse-Right' else IsPressed(VK['Shift']))):
+                        VK['Shift'])) if self.ShiftDisable.get() != 'Right-ShiftOnly' else IsPressed(VK['Shift']))):
                     mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
                     if RightMode not in ['Extra1', 'Extra2', 'NoDelay']:
                         sleep(0.017)
