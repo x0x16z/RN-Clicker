@@ -98,9 +98,9 @@ class _0x16z:
             self.Window = Tk()
             self.Window.title('VirtualKeyBoard')
             self.Window.geometry(
-                f'{int(((510 * GetSystemMetrics(SM_CXSCREEN) / 2560.0) + 1) * 1.2)}x{int((700 * GetSystemMetrics(SM_CYSCREEN) / 1600.0 + 1) * 1.2)}')
+                f'{int(((510 * GetSystemMetrics(SM_CXSCREEN) / 2560.0) + 1))}x{int((670 * GetSystemMetrics(SM_CYSCREEN) / 1600.0 + 1))}')
 
-            self.Window.maxsize(510, 700)
+            self.Window.maxsize(600, 800)
             apply_style(self.Window, 'acrylic')
             self.LeftKeepClick = BooleanVar()
             self.RightKeepClick = BooleanVar()
@@ -118,7 +118,7 @@ class _0x16z:
             self.LeftMaxCPS1 = Label(self.Window, text='Left MaxCPS', font=('Arial', 17))
             self.LeftMaxCPS1.place(x=10, y=20)
             self.LeftMaxCPS = Scale(self.Window, from_=1, to=20,
-                                    command=lambda event: self.UpdateWindow(), width=100)
+                                    command=lambda event: self.UpdateWindow(), width=100, number_of_steps=38)
             self.LeftMaxCPS.place(x=120, y=25)
             self.LeftMaxCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
             self.LeftMaxCPS2.place(x=230, y=20)
@@ -126,7 +126,7 @@ class _0x16z:
             self.LeftMinCPS1 = Label(self.Window, text='Left MinCPS', font=('Arial', 17))
             self.LeftMinCPS1.place(x=10, y=40)
             self.LeftMinCPS = Scale(self.Window, from_=1, to=20,
-                                    command=lambda event: self.UpdateWindow(), width=100)
+                                    command=lambda event: self.UpdateWindow(), width=100, number_of_steps=38)
             self.LeftMinCPS.place(x=120, y=45)
             self.LeftMinCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
             self.LeftMinCPS2.place(x=230, y=40)
@@ -134,7 +134,7 @@ class _0x16z:
             self.RightMaxCPS1 = Label(self.Window, text='RightMaxCPS', font=('Arial', 17))
             self.RightMaxCPS1.place(x=10, y=60)
             self.RightMaxCPS = Scale(self.Window, from_=1, to=20,
-                                     command=lambda event: self.UpdateWindow(), width=100)
+                                     command=lambda event: self.UpdateWindow(), width=100, number_of_steps=38)
             self.RightMaxCPS.place(x=120, y=65)
             self.RightMaxCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
             self.RightMaxCPS2.place(x=230, y=60)
@@ -142,15 +142,15 @@ class _0x16z:
             self.RightMinCPS1 = Label(self.Window, text='RightMinCPS', font=('Arial', 17))
             self.RightMinCPS1.place(x=10, y=83)
             self.RightMinCPS = Scale(self.Window, from_=1, to=20,
-                                     command=lambda event: self.UpdateWindow(), width=100)
+                                     command=lambda event: self.UpdateWindow(), width=100, number_of_steps=38)
             self.RightMinCPS.place(x=120, y=85)
             self.RightMinCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
             self.RightMinCPS2.place(x=230, y=80)
 
-            self.ExtraCPS1 = Label(self.Window, text='ExtraCPS', font=('Arial', 17))
+            self.ExtraCPS1 = Label(self.Window, text='ExtraModeCPS', font=('Arial', 16))
             self.ExtraCPS1.place(x=10, y=105)
             self.ExtraCPS = Scale(self.Window, from_=2, to=520,
-                                  command=lambda event: self.UpdateWindow(), width=100, number_of_steps=520)
+                                  command=lambda event: self.UpdateWindow(), width=100, number_of_steps=518)
             self.ExtraCPS.place(x=120, y=105)
             self.ExtraCPS2 = Label(self.Window, text='1337', font=('Arial', 17), height=1)
             self.ExtraCPS2.place(x=230, y=100)
@@ -178,22 +178,13 @@ class _0x16z:
                                      dropdown_font=('Arial', 14), height=24)
             self.RightKey.place(x=130, y=200)
 
-            self.LeftKeepClick1 = Checkbutton(self.Window, text='Left KeepClick',
-                                              variable=self.LeftKeepClick, font=('Arial', 14), hover=False,
-                                              border_width=2)
-            self.LeftKeepClick1.place(x=10, y=250)
-            self.RightKeepClick1 = Checkbutton(self.Window, text='RightKeepClick',
-                                               variable=self.RightKeepClick, font=('Arial', 14), hover=False,
-                                               border_width=2)
-            self.RightKeepClick1.place(x=10, y=275)
-
             self.AutoRod = BooleanVar()
             self.AutoRod1 = Checkbutton(self.Window, text='AutoRod', variable=self.AutoRod, font=('Arial', 14),
                                         hover=False, border_width=2)
             self.AutoRod1.place(x=150, y=250)
 
             self.Topmost = BooleanVar()
-            self.Topmost1 = Checkbutton(self.Window, text='WindowTopmost', variable=self.Topmost,
+            self.Topmost1 = Checkbutton(self.Window, text='AlwaysOnTop', variable=self.Topmost,
                                         command=lambda: self.UpdateWindow(), font=('Arial', 14), hover=False,
                                         border_width=2)
             self.Topmost1.place(x=10, y=300)
@@ -207,19 +198,19 @@ class _0x16z:
             self.ShiftDisable.place(x=130, y=225)
 
             self.InvenToryCheck = BooleanVar()
-            self.InvenToryCheck1 = Checkbutton(self.Window, text='InvenToryCheck', font=('Arial', 14),
+            self.InvenToryCheck1 = Checkbutton(self.Window, text='InventoryCheck', font=('Arial', 14),
                                                variable=self.InvenToryCheck, hover=False, border_width=2)
             self.InvenToryCheck1.place(x=150, y=275)
 
             self.AutoBlock = BooleanVar()
-            self.AutoBlock1 = Checkbutton(self.Window, text='AutoBlock', font=('Arial', 14), variable=self.AutoBlock,
+            self.AutoBlock1 = Checkbutton(self.Window, text='BlockHit', font=('Arial', 14), variable=self.AutoBlock,
                                           hover=False, border_width=2)
             self.AutoBlock1.place(x=150, y=300)
 
             self.selfDestruct = CTkButton(self.Window, text='SelfDestruct', font=('Arial', 14),
                                           border_width=2, width=15, height=5, fg_color='black',
                                           command=lambda: SelfDeStRuct(root=self.Window))
-            self.selfDestruct.place(x=10, y=376)
+            self.selfDestruct.place(x=10, y=353)
 
             self.NoToggleSound = BooleanVar()
             self.NoToggleSound1 = Checkbutton(self.Window, text='NoToggleSound', font=('Arial', 14),
@@ -227,19 +218,20 @@ class _0x16z:
             self.NoToggleSound1.place(x=150, y=326)
 
             self.DoubleClick = BooleanVar()
-            self.DoubleClick1 = Checkbutton(self.Window, text='FakeDoubleClick', font=('Arial', 14),
+            self.DoubleClick1 = Checkbutton(self.Window, text='DoubleClick', font=('Arial', 14),
                                             variable=self.DoubleClick, hover=False, border_width=2)
             self.DoubleClick1.place(x=10, y=326)
-
-            self.NCPSpeedLimit = BooleanVar()
-            self.NCPSpeedLimit1 = Checkbutton(self.Window, text='NCPSpeedLimit', font=('Arial', 14),
-                                              variable=self.NCPSpeedLimit, hover=False, border_width=2)
-            self.NCPSpeedLimit1.place(x=150, y=351)
 
             self.Jitter = BooleanVar()
             self.Jitter1 = Checkbutton(self.Window, text='JitterClick', font=('Arial', 14), variable=self.Jitter,
                                        hover=False, border_width=2)
-            self.Jitter1.place(x=10, y=351)
+            self.Jitter1.place(x=10, y=250)
+
+            self.AutoHideWindow = BooleanVar()
+            self.AutoHideWindow1 = Checkbutton(self.Window, text='AutoHideWindow', font=('Arial', 14),
+                                               variable=self.AutoHideWindow,
+                                               hover=False, border_width=2, command=lambda: self.SetDisableClick())
+            self.AutoHideWindow1.place(x=10, y=275)
 
             self.ExtraCPS.set(16)
             self.ShiftDisable.set('None')
@@ -247,10 +239,10 @@ class _0x16z:
             self.RightKey.set('MouseBtn4')
             self.RightMode.set('Standard')
             self.LeftMode.set('Standard')
-            self.LeftMaxCPS.set(13.37)
-            self.RightMaxCPS.set(13.37)
-            self.LeftMinCPS.set(9.99)
-            self.RightMinCPS.set(9.99)
+            self.LeftMaxCPS.set(13.5)
+            self.RightMaxCPS.set(13.5)
+            self.LeftMinCPS.set(7)
+            self.RightMinCPS.set(7)
             self.UpdateWindow()
             self.Window.after(1500, lambda: self.Main())
             self.Window.mainloop()
@@ -268,6 +260,11 @@ class _0x16z:
                         Beep(500, 150)
                     else:
                         sleep(0.5)
+                    if self.AutoHideWindow.get():
+                        self.Window.attributes('-alpha', 1)
+                        self.Window.title('VirtualKeyBoard')
+                        self.Window.geometry(
+                            f'{int(((510 * GetSystemMetrics(SM_CXSCREEN) / 2560.0) + 1) * 1.2)}x{int((700 * GetSystemMetrics(SM_CYSCREEN) / 1600.0 + 1) * 1.2)}')
                 else:
                     self.EnableClick = True
                     self.selfDestruct.configure(fg_color='red')
@@ -277,11 +274,14 @@ class _0x16z:
                         Beep(1000, 150)
                     else:
                         sleep(0.5)
+                    if self.AutoHideWindow.get():
+                        self.Window.attributes('-alpha', 0)
+                        self.Window.title(' ')
+                        self.Window.geometry('0x0')
             if self.EnableClick and (
-                    1 if not self.InvenToryCheck.get() else IsCurSorInCenTer(self.MouseController, 30)):
+                1 if not self.InvenToryCheck.get() else IsCurSorInCenTer(self.MouseController, 30)):
                 if (LeftMode != 'Disabled' and IsPressed(VK[self.LeftKey.get()])) and (
-                        1 if self.ShiftDisable.get() in ['Right', 'None'] else
-                        not IsPressed(VK['Shift'])):
+                    1 if self.ShiftDisable.get() in ['Right', 'None'] else not IsPressed(VK['Shift'])):
                     if self.Jitter.get():
                         SmoothMouseMove(Randint(-2, 3), Randint(-3, 2))
                     self.AutoRodCount += 1
@@ -292,18 +292,15 @@ class _0x16z:
                         mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
                     if LeftMode not in ['Extra1', 'Extra2', 'NoDelay']:
                         sleep(0.017)
-                    if not self.LeftKeepClick.get():
+                    if self.LeftKey.get() != 'LMouseBtn':
                         mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
                     if self.AutoBlock.get():
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                     self.VulcanClickCount += 1
                     if LeftMode == 'Standard':
-                        StandardClickDelay = (Randint(65, 135) / 100) * (
+                        sleep((Randint(65, 135) / 100) * (
                             (Randint(5, 64) / 100) / Randint(int(self.LeftMinCPS.get()),
-                                                             int(self.LeftMaxCPS.get())))
-                        sleep(StandardClickDelay if (
-                            not self.NCPSpeedLimit.get() or StandardClickDelay >= (0.7 / 14.75)) else (
-                            0.7 / 16.69))
+                                                             int(self.LeftMaxCPS.get()))))
                     elif LeftMode == 'VulcanBoost':
                         if self.VulcanClickCount >= Randint(int(self.LeftMinCPS.get()),
                                                             int(self.LeftMaxCPS.get())) / 1.4:
@@ -387,7 +384,7 @@ class _0x16z:
                     mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
                     if RightMode not in ['Extra1', 'Extra2', 'NoDelay']:
                         sleep(0.017)
-                    if not self.RightKeepClick.get():
+                    if self.RightKey.get() != 'RMouseBtn':
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
                     if RightMode == 'Standard':
                         sleep(0.55 / Randint(int(self.RightMinCPS.get()), int(self.RightMaxCPS.get())))
@@ -403,10 +400,11 @@ class _0x16z:
                         sleep(0.17)
                         self.KeyboardController.release('q')
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
+
                         sleep(1.73)
                     elif RightMode == 'Stable':
                         sleep(0.42 / (int(self.RightMaxCPS.get()) * 1.5))
-                    elif LeftMode == 'Normal':
+                    elif RightMode == 'Normal':
                         sleep(0.6 / Randint(int(self.RightMinCPS.get()), int(self.RightMaxCPS.get())))
                     elif 'Extra' in RightMode:
                         mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
@@ -431,6 +429,9 @@ class _0x16z:
             self.LeftMinCPS2.configure(text='%.2f' % self.LeftMinCPS.get())
             self.RightMinCPS2.configure(text='%.2f' % self.RightMinCPS.get())
             self.ExtraCPS2.configure(text=int(self.ExtraCPS.get()))
+
+        def SetDisableClick(self):
+            self.EnableClick = False
 
 
 if __name__ == '__main__':
