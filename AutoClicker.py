@@ -53,18 +53,6 @@ def IsCurSorInCenTer(mouseConTroller, threshold=25):
     return abs(cursor_x - center_x) <= threshold and abs(cursor_y - center_y) <= threshold
 
 
-def SmoothMouseMove(x, y):
-    XMoveDistance = 0.0
-    while XMoveDistance <= abs(x):
-        mouse_event(MOUSEEVENTF_MOVE, (1 if abs(x) == x else -1) * int((abs(x) - XMoveDistance) / 2 + 1), 0)
-        XMoveDistance += 1
-
-    YMoveDistance = 0.0
-    while YMoveDistance <= abs(y):
-        mouse_event(MOUSEEVENTF_MOVE, 0, (1 if abs(y) == y else -1) * int((abs(y) - YMoveDistance) / 2 + 1))
-        YMoveDistance += 1
-
-
 LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanBoost', 'LegitFast', 'FDP5', 'Butterfly', 'NoDelay',
                      'Normal',
                      'Experimental', 'Extra1', 'Extra2', 'Disabled']
@@ -114,29 +102,29 @@ class _0x16z:
             self.Label1 = Label(self.Window, text='RN Clicker2.1       Press F9 to toggle autoclick', font=('Arial', 13))
             self.Label1.place(x=10, y=1)
 
-            self.LeftMaxCPS1 = Label(self.Window, text='Left MaxCPS', font=('Arial', 17))
-            self.LeftMaxCPS1.place(x=10, y=20)
+            self.LeftCPS = Label(self.Window, text='Left CPS', font=('Arial', 17))
+            self.LeftCPS.place(x=10, y=20)
             self.LeftMaxCPS = Scale(self.Window, from_=2, to=20,
-                                    command=lambda event: self.UpdateWindow(), width=60, number_of_steps=36)
-            self.LeftMaxCPS.place(x=170, y=25)
-            self.LeftMaxCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
-            self.LeftMaxCPS2.place(x=230, y=20)
+                                    command=lambda event: self.UpdateWindow(), width=70, number_of_steps=36)
+            self.LeftMaxCPS.place(x=150, y=25)
+            self.LeftCPS1 = Label(self.Window, text='1337', font=('Arial', 17))
+            self.LeftCPS1.place(x=230, y=20)
 
             self.LeftMinCPS = Scale(self.Window, from_=1, to=20,
-                                    command=lambda event: self.UpdateWindow(), width=50, number_of_steps=38)
-            self.LeftMinCPS.place(x=120, y=25)
+                                    command=lambda event: self.UpdateWindow(), width=60, number_of_steps=38)
+            self.LeftMinCPS.place(x=90, y=25)
 
-            self.RightMaxCPS1 = Label(self.Window, text='RightMaxCPS', font=('Arial', 17))
-            self.RightMaxCPS1.place(x=10, y=40)
+            self.RightCPS = Label(self.Window, text='RightCPS', font=('Arial', 17))
+            self.RightCPS.place(x=10, y=40)
             self.RightMaxCPS = Scale(self.Window, from_=2, to=20,
-                                     command=lambda event: self.UpdateWindow(), width=60, number_of_steps=38)
-            self.RightMaxCPS.place(x=170, y=45)
-            self.RightMaxCPS2 = Label(self.Window, text='1337', font=('Arial', 17))
-            self.RightMaxCPS2.place(x=230, y=40)
+                                     command=lambda event: self.UpdateWindow(), width=70, number_of_steps=36)
+            self.RightMaxCPS.place(x=150, y=45)
+            self.RightCPS1 = Label(self.Window, text='1337', font=('Arial', 17))
+            self.RightCPS1.place(x=230, y=40)
 
             self.RightMinCPS = Scale(self.Window, from_=1, to=20,
-                                     command=lambda event: self.UpdateWindow(), width=50, number_of_steps=38)
-            self.RightMinCPS.place(x=120, y=45)
+                                     command=lambda event: self.UpdateWindow(), width=60, number_of_steps=38)
+            self.RightMinCPS.place(x=90, y=45)
 
             self.ExtraCPS1 = Label(self.Window, text='ExtraModeCPS', font=('Arial', 16))
             self.ExtraCPS1.place(x=10, y=63)
@@ -284,7 +272,7 @@ class _0x16z:
                 if (LeftMode != 'Disabled' and IsPressed(VK[self.LeftKey.get()])) and (
                         1 if self.ShiftDisable.get() in ['Right', 'None'] else not IsPressed(VK['Shift'])):
                     if self.Jitter.get():
-                        SmoothMouseMove(Randint(-2, 3), Randint(-3, 2))
+                        mouse_event(MOUSEEVENTF_MOVE, Randint(-2, 3), Randint(-3, 2))
                     self.AutoRodCount += 1
                     if self.AutoBlock.get():
                         mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
@@ -403,8 +391,8 @@ class _0x16z:
             self.LeftMinCPS.configure(to=self.LeftMaxCPS.get(), number_of_steps=2*(self.LeftMaxCPS.get() - 1))
             self.RightMinCPS.configure(to=self.RightMaxCPS.get(), number_of_steps=2*(self.RightMaxCPS.get() - 1))
 
-            self.LeftMaxCPS2.configure(text='%.1f-%.1f' % (self.LeftMinCPS.get(), self.LeftMaxCPS.get()))
-            self.RightMaxCPS2.configure(text='%.1f-%.1f' % (self.RightMinCPS.get(), self.RightMaxCPS.get()))
+            self.LeftCPS1.configure(text='%.1f-%.1f' % (self.LeftMinCPS.get(), self.LeftMaxCPS.get()))
+            self.RightCPS1.configure(text='%.1f-%.1f' % (self.RightMinCPS.get(), self.RightMaxCPS.get()))
             self.DoubleClickRate2.configure(text='%.1f' % (self.DoubleClickRate.get()))
             self.ExtraCPS2.configure(text=int(self.ExtraCPS.get()))
 
