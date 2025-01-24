@@ -99,7 +99,7 @@ class _0x16z:
                 _ = err
                 self.Window.iconbitmap('.')
 
-            self.Label1 = Label(self.Window, text='RN Clicker2.1       Press F9 to toggle autoclick',
+            self.Label1 = Label(self.Window, text='RN Clicker2.2       Press F9 to toggle autoclick',
                                 font=('Arial', 13))
             self.Label1.place(x=10, y=1)
 
