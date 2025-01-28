@@ -53,10 +53,9 @@ def IsCurSorInCenTer(mouseConTroller, threshold=25):
     return abs(cursor_x - center_x) <= threshold and abs(cursor_y - center_y) <= threshold
 
 
-LeftClickModeList = ['Standard', 'Liquid', 'Stable', 'VulcanFast', 'LegitFast', 'FDP5', 'Butterfly', 'NoDelay',
-                     'Normal',
-                     'Experimental', 'Disabled']
-RightClickModeList = ['Standard', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Stable', 'LegitFast', 'Normal', 'Disabled']
+LeftClickModeList = ['Standard', 'Randomization', 'Experimental',  'FDP5', 'Butterfly', 'Liquid', 'Stable', 'VulcanFast', 'LegitFast',  'NoDelay',
+                     'Disabled']
+RightClickModeList = ['Standard', 'Randomization', 'Liquid', 'NCP', 'NoDelay', 'DropNoSlow', 'Stable', 'LegitFast', 'Disabled']
 VK = {
     "LMB": 0x01, "RMB": 0x02, "MouseBtn4": 0x05, "MouseBtn5": 0x06, "Backspace": 0x08, "Tab": 0x09,
     "Enter": 0x0D, "Shift": 0x10, "Control": 0x11,
@@ -126,13 +125,13 @@ class _0x16z:
                                      command=lambda event: self.UpdateWindow(), width=60, number_of_steps=38)
             self.RightMinCPS.place(x=90, y=45)
 
-            self.ClickRepeatTimes1 = Label(self.Window, text='ClickRepeatTimes', font=('Arial', 16))
-            self.ClickRepeatTimes1.place(x=10, y=61)
-            self.ClickRepeatTimes = Scale(self.Window, from_=0, to=64,
+            self.ExtraClicksTimes1 = Label(self.Window, text='ExtraClicksTimes', font=('Arial', 16))
+            self.ExtraClicksTimes1.place(x=10, y=61)
+            self.ExtraClicksTimes = Scale(self.Window, from_=0, to=64,
                                           command=lambda event: self.UpdateWindow(), width=100, number_of_steps=65)
-            self.ClickRepeatTimes.place(x=140, y=65)
-            self.ClickRepeatTimes2 = Label(self.Window, text='1337', font=('Arial', 17), height=1)
-            self.ClickRepeatTimes2.place(x=250, y=63)
+            self.ExtraClicksTimes.place(x=140, y=65)
+            self.ExtraClicksTimes2 = Label(self.Window, text='1337', font=('Arial', 17), height=1)
+            self.ExtraClicksTimes2.place(x=250, y=63)
 
             self.DoubleClickRate1 = Label(self.Window, text='DoubleClickRate', font=('Arial', 16))
             self.DoubleClickRate1.place(x=10, y=83)
@@ -221,12 +220,12 @@ class _0x16z:
                                           command=lambda: SelfDeStRuct(root=self.Window))
             self.selfDestruct.place(x=10, y=325)
 
-            self.RightRepeatClicks = BooleanVar()
-            self.RightRepeatClicks1 = Checkbutton(self.Window, text='RightRepeatClicks', font=('Arial', 14),
-                                                  variable=self.RightRepeatClicks, hover=False, border_width=2)
-            self.RightRepeatClicks1.place(x=150, y=325)
+            self.RightExtraClicks = BooleanVar()
+            self.RightExtraClicks1 = Checkbutton(self.Window, text='ExtraRightClicks', font=('Arial', 14),
+                                                 variable=self.RightExtraClicks, hover=False, border_width=2)
+            self.RightExtraClicks1.place(x=150, y=325)
 
-            self.ClickRepeatTimes.set(0)
+            self.ExtraClicksTimes.set(0)
             self.ShiftDisable.set('None')
             self.LeftKey.set('MouseBtn5')
             self.RightKey.set('MouseBtn4')
@@ -288,7 +287,7 @@ class _0x16z:
                         BlockHit = True
                         mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
 
-                    for _ in range(int(self.ClickRepeatTimes.get())+1+(1 if Randint(0, 99) <= self.DoubleClickRate.get() - 1 else 0)):
+                    for _ in range(int(self.ExtraClicksTimes.get()) + 1 + (1 if Randint(0, 99) <= self.DoubleClickRate.get() - 1 else 0)):
                         mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
 
                     if LeftMode not in ['NoDelay']:
@@ -302,9 +301,7 @@ class _0x16z:
                     self.VulcanClickCount += 1
 
                     if LeftMode == 'Standard':
-                        sleep((Randint(65, 135) / 100) * (
-                            (Randint(15, 64) / 100) / Randint(int(self.LeftMinCPS.get()),
-                                                              int(self.LeftMaxCPS.get()))))
+                        sleep(0.6 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())))
                     elif LeftMode == 'VulcanFast':
                         if self.VulcanClickCount >= Randint(int(self.LeftMinCPS.get()),
                                                             int(self.LeftMaxCPS.get())) / 1.4:
@@ -343,8 +340,21 @@ class _0x16z:
                         self.MouseController.scroll(0, -5)
                         sleep(0.5 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())))
                         self.MouseController.scroll(0, 5)
-                    elif LeftMode == 'Normal':
-                        sleep(0.6 / Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())))
+                    elif LeftMode == 'Randomization':
+                        sleep((Randint(65, 135) / 100) * (
+                            (Randint(25, 85) / 100) / Randint(int(self.LeftMinCPS.get()),
+                                                              int(self.LeftMaxCPS.get()))) *
+                              (
+                                  1 if Randint(1, 10) >= 5 else
+                                  (Randint(65, 125)-1) / 100
+                              )*((Randint(70, 140) / 100) if Randint(
+                                int(self.LeftMinCPS.get()),
+                                int(self.LeftMaxCPS.get())) % 2 == 0 else
+                                 Randint(50, 150) / 100
+                              ) / (
+                                  (Randint(8, 13)) /
+                                  (Randint(9, 11))
+                              ))
                     if self.AutoRod.get() and self.CAutoRod >= Randint(int(self.LeftMinCPS.get()), int(self.LeftMaxCPS.get())):
                         self.MouseController.scroll(0, -5)
                         sleep(0.01)
@@ -358,7 +368,7 @@ class _0x16z:
                 if (RightMode != 'Disabled' and IsPressed(VK[self.RightKey.get()])) and ((
                     1 if self.ShiftDisable.get() in ['Left', 'None'] else (not IsPressed(
                         VK['Shift'])) if self.ShiftDisable.get() != 'Right-ShiftOnly' else IsPressed(VK['Shift']))):
-                    for _ in range(1+(0 if not self.RightRepeatClicks.get() else self.ClickRepeatTimes.get())):
+                    for _ in range(1+(0 if not self.RightExtraClicks.get() else self.ExtraClicksTimes.get())):
                         mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
                     if RightMode not in ['NoDelay']:
                         sleep(0.017)
@@ -382,8 +392,21 @@ class _0x16z:
                         sleep(1.73)
                     elif RightMode == 'Stable':
                         sleep(0.5 / (int(self.RightMaxCPS.get()) * 1.5))
-                    elif RightMode == 'Normal':
-                        sleep(0.6 / Randint(int(self.RightMinCPS.get()), int(self.RightMaxCPS.get())))
+                    elif RightMode == 'Randomization':
+                        sleep((Randint(65, 135) / 100) * (
+                            (Randint(25, 85) / 100) / Randint(int(self.RightMinCPS.get()),
+                                                              int(self.RightMaxCPS.get()))) *
+                              (
+                                  1 if Randint(1, 10) >= 5 else
+                                  (Randint(65, 125) - 1) / 100
+                              ) * ((Randint(85, 110) / 100) if Randint(
+                                int(self.RightMinCPS.get()),
+                                int(self.RightMaxCPS.get())) % 2 == 0 else
+                                 Randint(90, 115) / 100
+                              ) / (
+                                  (Randint(8, 13)) /
+                                  (Randint(9, 11))
+                              ))
             self.Window.after(3, lambda: self.Main())
 
         def UpdateWindow(self):
@@ -398,7 +421,7 @@ class _0x16z:
             self.LeftCPS1.configure(text='%.1f-%.1f' % (self.LeftMinCPS.get(), self.LeftMaxCPS.get()))
             self.RightCPS1.configure(text='%.1f-%.1f' % (self.RightMinCPS.get(), self.RightMaxCPS.get()))
             self.DoubleClickRate2.configure(text='%.1f' % (self.DoubleClickRate.get()) + '%')
-            self.ClickRepeatTimes2.configure(text=int(self.ClickRepeatTimes.get()))
+            self.ExtraClicksTimes2.configure(text=int(self.ExtraClicksTimes.get()))
             self.BlockRate2.configure(text='%.1f' % (self.BlockRate.get()) + '%')
 
         def SetDisableClick(self):
